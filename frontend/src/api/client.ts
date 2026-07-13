@@ -108,3 +108,13 @@ export const notificationsApi = {
   markRead: (id: number) => api.put(`/notifications/${id}/read`).then((r) => r.data),
   markAllRead: () => api.post('/notifications/read-all').then((r) => r.data),
 }
+
+export const emailSequencesApi = {
+  list: () => api.get('/email-sequences').then((r) => r.data),
+  get: (id: number) => api.get(`/email-sequences/${id}`).then((r) => r.data),
+  create: (data: Record<string, unknown>) => api.post('/email-sequences', data).then((r) => r.data),
+  update: (id: number, data: Record<string, unknown>) => api.put(`/email-sequences/${id}`, data).then((r) => r.data),
+  delete: (id: number) => api.delete(`/email-sequences/${id}`).then((r) => r.data),
+  setSteps: (id: number, steps: Record<string, unknown>[]) => api.put(`/email-sequences/${id}/steps`, steps).then((r) => r.data),
+  logs: (sequenceId?: number) => api.get(`/email-sequences/logs/all`, { params: sequenceId ? { sequence_id: sequenceId } : {} }).then((r) => r.data),
+}

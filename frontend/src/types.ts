@@ -163,3 +163,47 @@ export interface NotificationResponse {
 export interface UnreadCountResponse {
   count: number
 }
+
+// Email Sequences
+export interface SequenceStepItem {
+  id?: number
+  sequence_id?: number
+  step_order: number
+  step_type: 'delay' | 'send_email' | 'condition' | 'update_stage' | 'notify'
+  delay_days?: number | null
+  email_subject?: string | null
+  email_body?: string | null
+  condition_field?: string | null
+  condition_value?: string | null
+  target_stage?: string | null
+  notify_role?: string | null
+}
+
+export interface EmailSequence {
+  id: number
+  name: string
+  description: string | null
+  trigger: string
+  trigger_stage: string | null
+  is_active: boolean
+  created_by: number
+  created_at: string | null
+  updated_at: string | null
+  steps: SequenceStepItem[]
+}
+
+export interface EmailLogItem {
+  id: number
+  sequence_id: number | null
+  step_id: number | null
+  lead_id: number
+  sent_by: number | null
+  recipient_email: string
+  subject: string
+  status: string
+  opened_at: string | null
+  clicked_at: string | null
+  replied_at: string | null
+  error_message: string | null
+  created_at: string | null
+}

@@ -287,7 +287,7 @@ export default function Leads() {
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span className="font-mono">{l.phone}</span>
+                      <a href={`tel:${l.phone}`} onClick={(e) => e.stopPropagation()} className="font-mono hover:text-emerald-400 transition-colors">{l.phone}</a>
                       <span>{l.assigned_to || "Unassigned"}</span>
                     </div>
                     {l.deal_value && (
@@ -385,7 +385,7 @@ export default function Leads() {
                         </TableCell>
                         <TableCell>{l.contact_name}</TableCell>
                         <TableCell className="font-mono text-sm">
-                          {l.phone}
+                          <a href={`tel:${l.phone}`} onClick={(e) => e.stopPropagation()} className="hover:text-emerald-400 transition-colors">{l.phone}</a>
                         </TableCell>
                         <TableCell>
                           <Badge
@@ -436,10 +436,14 @@ export default function Leads() {
                               <Eye className="h-3.5 w-3.5" />
                               View Details
                             </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => { window.location.href = `tel:${l.phone}` }}>
+                              <Phone className="h-3.5 w-3.5" />
+                              Call
+                            </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => copyToClipboard(l.phone)}
                             >
-                              <Phone className="h-3.5 w-3.5" />
+                              <Copy className="h-3.5 w-3.5" />
                               Copy Phone
                             </DropdownMenuItem>
                             {l.email && (

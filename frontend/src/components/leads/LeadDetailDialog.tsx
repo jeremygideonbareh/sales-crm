@@ -79,7 +79,7 @@ export function LeadDetailDialog({
             </div>
             <div className="space-y-1">
               <Label>Phone</Label>
-              <p className="font-mono text-sm">{lead.phone}</p>
+              <a href={`tel:${lead.phone}`} className="font-mono text-sm hover:text-emerald-400 transition-colors">{lead.phone}</a>
             </div>
             <div className="space-y-1">
               <Label>Email</Label>

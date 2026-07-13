@@ -270,19 +270,31 @@ export default function CallingView() {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3 rounded-lg bg-muted p-3 sm:p-4">
             <Phone className="h-6 w-6 shrink-0 text-emerald-400" />
-            <span className="text-xl sm:text-2xl font-bold tracking-wider break-all">
+            <a
+              href={`tel:${lead.phone}`}
+              className="text-xl sm:text-2xl font-bold tracking-wider break-all hover:text-emerald-400 transition-colors"
+            >
               {lead.phone}
-            </span>
-            <Tooltip content={copied ? "Copied!" : "Copy phone number"}>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={copyPhone}
-                className="h-9 w-9 shrink-0"
+            </a>
+            <div className="ml-auto flex items-center gap-2">
+              <a
+                href={`tel:${lead.phone}`}
+                className="inline-flex h-9 items-center gap-1.5 rounded-md bg-emerald-600 px-3 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
               >
-                <Copy className="h-4 w-4" />
-              </Button>
-            </Tooltip>
+                <Phone className="h-4 w-4" />
+                Call
+              </a>
+              <Tooltip content={copied ? "Copied!" : "Copy phone number"}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={copyPhone}
+                  className="h-9 w-9 shrink-0"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </Tooltip>
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -15,6 +15,7 @@ import {
   ArrowRightLeft,
   Settings,
   Shield,
+  Mail,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar } from "@/components/ui/avatar"
@@ -40,6 +41,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
         { to: "/manager/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { to: "/manager/leads", label: "Leads", icon: Users },
         { to: "/manager/leaderboard", label: "Leaderboard", icon: BarChart3 },
+        { to: "/manager/sequences", label: "Sequences", icon: Mail },
         { to: "/admin/users", label: "Users", icon: Shield },
         { to: "/settings", label: "Settings", icon: Settings },
       ]

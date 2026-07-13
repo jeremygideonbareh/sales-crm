@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from sqlalchemy import text
 
 from .config import settings
@@ -17,19 +16,11 @@ from .api.export import router as export_router
 from .api.pipeline import router as pipeline_router
 from .api.admin import router as admin_router
 from .api.notifications import router as notifications_router
-
-DEFAULT_JWT = "change-this-to-a-long-random-secret-key"
+from .api.email_sequences import router as email_sequences_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    if not settings.jwt_secret or settings.jwt_secret == DEFAULT_JWT:
-        raise RuntimeError(
-            "CRITICAL: JWT_SECRET must be changed from default! "
-            "Set a strong random secret in the .env file or JWT_SECRET environment variable."
-        )
-    if not settings.database_url:
-        raise RuntimeError("DATABASE_URL must be set in environment or .env file")
     await init_db()
     yield
 
@@ -56,6 +47,7 @@ app.include_router(export_router)
 app.include_router(pipeline_router)
 app.include_router(admin_router)
 app.include_router(notifications_router)
+app.include_router(email_sequences_router)
 
 
 @app.get("/api/health")

@@ -13,6 +13,7 @@ import RepDashboard from "@/pages/rep/Dashboard"
 import RepDemoRequests from "@/pages/rep/DemoRequests"
 import RepHandovers from "@/pages/rep/Handovers"
 import ManagerLeaderboard from "@/pages/manager/Leaderboard"
+import EmailSequences from "@/pages/manager/EmailSequences"
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -39,6 +40,7 @@ function AppLayout() {
         <Route path="/manager/dashboard" element={<ErrorBoundary><ManagerDashboard /></ErrorBoundary>} />
         <Route path="/manager/leads" element={<ErrorBoundary><ManagerLeads /></ErrorBoundary>} />
         <Route path="/manager/leaderboard" element={<ErrorBoundary><ManagerLeaderboard /></ErrorBoundary>} />
+        <Route path="/manager/sequences" element={<ErrorBoundary><EmailSequences /></ErrorBoundary>} />
         <Route path="/rep/dashboard" element={<ErrorBoundary><RepDashboard /></ErrorBoundary>} />
         <Route path="/rep/calling" element={<ErrorBoundary><RepCallingView /></ErrorBoundary>} />
         <Route path="/rep/demos" element={<ErrorBoundary><RepDemoRequests /></ErrorBoundary>} />

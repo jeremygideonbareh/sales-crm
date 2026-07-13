@@ -23,7 +23,7 @@ async def get_db():
 
 async def init_db():
     async with engine.begin() as conn:
-        from .models import User, Lead, CallLog, DemoRequest, Handover, Notification
+        from .models import User, Lead, CallLog, DemoRequest, Handover, Notification, EmailSequence, SequenceStep, EmailLog
         await conn.run_sync(Base.metadata.create_all)
 
 

@@ -147,3 +147,19 @@ export interface PipelineStageItem {
 export interface PipelineOverviewResponse {
   stages: PipelineStageItem[]
 }
+
+// Notifications
+export interface NotificationResponse {
+  id: number
+  user_id: number
+  type: string
+  title: string
+  message: string | null
+  link: string | null
+  is_read: boolean
+  created_at: string | null
+}
+
+export interface UnreadCountResponse {
+  count: number
+}

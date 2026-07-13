@@ -11,12 +11,14 @@ from ..models.lead import LeadStatus, Lead
 from ..models.call_log import CallLog
 from .deps import get_current_user, require_role
 
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+
 router = APIRouter(prefix="/api/leads", tags=["leads"])
 
 
 @router.get("", response_model=LeadListResponse)
 async def list_leads(
-    status: str = Query(None),
+    status: list[str] = Query(None),
     assigned_to: int = Query(None),
     search: str = Query(None),
     skip: int = Query(0, ge=0),
@@ -37,8 +39,11 @@ async def upload_leads(
     if not file.filename.endswith((".csv", ".xls", ".xlsx")):
         raise HTTPException(status_code=400, detail="Unsupported file format. Use CSV or Excel.")
 
+    content = await file.read()
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=400, detail="File too large. Maximum size is 10MB.")
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=file.filename) as tmp:
-        content = await file.read()
         tmp.write(content)
         tmp_path = tmp.name
 

@@ -2,7 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthProvider, useAuth } from "@/context/AuthContext"
 import { AppShell } from "@/components/layout/AppShell"
 import { ToastContainer } from "@/components/ui/toast"
+import { ErrorBoundary } from "@/components/ui/error-boundary"
 import Login from "@/pages/Login"
+import Settings from "@/pages/Settings"
+import AdminUsers from "@/pages/admin/Users"
 import ManagerDashboard from "@/pages/manager/Dashboard"
 import ManagerLeads from "@/pages/manager/Leads"
 import RepCallingView from "@/pages/rep/CallingView"
@@ -33,13 +36,15 @@ function AppLayout() {
   return (
     <AppShell>
       <Routes>
-        <Route path="/manager/dashboard" element={<ManagerDashboard />} />
-        <Route path="/manager/leads" element={<ManagerLeads />} />
-        <Route path="/manager/leaderboard" element={<ManagerLeaderboard />} />
-        <Route path="/rep/dashboard" element={<RepDashboard />} />
-        <Route path="/rep/calling" element={<RepCallingView />} />
-        <Route path="/rep/demos" element={<RepDemoRequests />} />
-        <Route path="/rep/handovers" element={<RepHandovers />} />
+        <Route path="/manager/dashboard" element={<ErrorBoundary><ManagerDashboard /></ErrorBoundary>} />
+        <Route path="/manager/leads" element={<ErrorBoundary><ManagerLeads /></ErrorBoundary>} />
+        <Route path="/manager/leaderboard" element={<ErrorBoundary><ManagerLeaderboard /></ErrorBoundary>} />
+        <Route path="/rep/dashboard" element={<ErrorBoundary><RepDashboard /></ErrorBoundary>} />
+        <Route path="/rep/calling" element={<ErrorBoundary><RepCallingView /></ErrorBoundary>} />
+        <Route path="/rep/demos" element={<ErrorBoundary><RepDemoRequests /></ErrorBoundary>} />
+        <Route path="/rep/handovers" element={<ErrorBoundary><RepHandovers /></ErrorBoundary>} />
+        <Route path="/settings" element={<ErrorBoundary><Settings /></ErrorBoundary>} />
+        <Route path="/admin/users" element={<ErrorBoundary><AdminUsers /></ErrorBoundary>} />
         <Route
           path="*"
           element={
@@ -63,7 +68,7 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<ErrorBoundary><Login /></ErrorBoundary>} />
           <Route
             path="/*"
             element={

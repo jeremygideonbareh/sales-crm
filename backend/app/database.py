@@ -1,3 +1,4 @@
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
@@ -22,5 +23,15 @@ async def get_db():
 
 async def init_db():
     async with engine.begin() as conn:
-        from .models import User, Lead, CallLog
+        from .models import User, Lead, CallLog, DemoRequest, Handover, Notification
         await conn.run_sync(Base.metadata.create_all)
+
+
+async def check_db_connection() -> bool:
+    """Check if the database is reachable."""
+    try:
+        async with async_session_factory() as session:
+            await session.execute(text("SELECT 1"))
+            return True
+    except Exception:
+        return False

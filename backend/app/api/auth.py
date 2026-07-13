@@ -1,3 +1,4 @@
+import re
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,9 +11,26 @@ from ..models.user import User, UserRole
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
+MIN_PASSWORD_LENGTH = 8
+
+
+def validate_password(password: str):
+    errors = []
+    if len(password) < MIN_PASSWORD_LENGTH:
+        errors.append(f"Password must be at least {MIN_PASSWORD_LENGTH} characters")
+    if not re.search(r"[A-Z]", password):
+        errors.append("Password must contain at least one uppercase letter")
+    if not re.search(r"[a-z]", password):
+        errors.append("Password must contain at least one lowercase letter")
+    if not re.search(r"\d", password):
+        errors.append("Password must contain at least one digit")
+    if errors:
+        raise HTTPException(status_code=400, detail="; ".join(errors))
+
 
 @router.post("/register", response_model=UserResponse)
 async def register(req: RegisterRequest, db: AsyncSession = Depends(get_db)):
+    validate_password(req.password)
     try:
         user = await register_user(db, req.email, req.password, req.full_name, req.role)
         return user

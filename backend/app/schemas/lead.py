@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
+from ..models.lead import LeadStatus
 
 
 class LeadResponse(BaseModel):
@@ -42,6 +43,13 @@ class StatusUpdateRequest(BaseModel):
     notes: Optional[str] = None
     deal_value: Optional[float] = None
     call_duration_seconds: Optional[int] = None
+
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v: str) -> str:
+        if v not in [s.value for s in LeadStatus]:
+            raise ValueError(f"Invalid lead status: {v}")
+        return v
 
 
 class DeleteLeadsRequest(BaseModel):

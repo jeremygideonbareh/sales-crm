@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL || '/api'
 const api = axios.create({
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
+  timeout: 15000,
 })
 
 api.interceptors.request.use((config) => {
@@ -99,4 +100,11 @@ export const analyticsApi = {
 
 export const pipelineApi = {
   overview: () => api.get('/pipeline/overview').then((r) => r.data),
+}
+
+export const notificationsApi = {
+  list: () => api.get('/notifications').then((r) => r.data),
+  unreadCount: () => api.get('/notifications/unread-count').then((r) => r.data),
+  markRead: (id: number) => api.put(`/notifications/${id}/read`).then((r) => r.data),
+  markAllRead: () => api.post('/notifications/read-all').then((r) => r.data),
 }

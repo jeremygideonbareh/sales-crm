@@ -11,7 +11,7 @@ from ..schemas.lead import StatusUpdateRequest
 async def get_leads(
     db: AsyncSession,
     user: User,
-    status: Optional[str] = None,
+    status: Optional[list[str]] = None,
     assigned_to: Optional[int] = None,
     search: Optional[str] = None,
     skip: int = 0,
@@ -29,8 +29,9 @@ async def get_leads(
         count_query = count_query.where(Lead.assigned_to == assigned_to)
 
     if status:
-        query = query.where(Lead.status == LeadStatus(status))
-        count_query = count_query.where(Lead.status == LeadStatus(status))
+        status_enums = [LeadStatus(s) for s in status if s]
+        query = query.where(Lead.status.in_(status_enums))
+        count_query = count_query.where(Lead.status.in_(status_enums))
 
     if search:
         pattern = f"%{search}%"

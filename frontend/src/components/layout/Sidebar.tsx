@@ -1,7 +1,7 @@
-import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { useIsMobile } from "@/hooks/useMediaQuery"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -9,11 +9,12 @@ import {
   PhoneCall,
   LogOut,
   ChevronLeft,
-  Menu,
   X,
   BarChart3,
   Calendar,
   ArrowRightLeft,
+  Settings,
+  Shield,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar } from "@/components/ui/avatar"
@@ -21,13 +22,14 @@ import { Avatar } from "@/components/ui/avatar"
 interface SidebarProps {
   collapsed: boolean
   onToggle: () => void
+  mobileOpen?: boolean
+  onMobileClose?: () => void
 }
 
-export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: SidebarProps) {
   const { user, logout } = useAuth()
   const location = useLocation()
   const isMobile = useIsMobile()
-  const [mobileOpen, setMobileOpen] = useState(false)
 
   if (!user) return null
 
@@ -38,12 +40,15 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         { to: "/manager/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { to: "/manager/leads", label: "Leads", icon: Users },
         { to: "/manager/leaderboard", label: "Leaderboard", icon: BarChart3 },
+        { to: "/admin/users", label: "Users", icon: Shield },
+        { to: "/settings", label: "Settings", icon: Settings },
       ]
     : [
         { to: "/rep/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { to: "/rep/calling", label: "Calling", icon: PhoneCall },
         { to: "/rep/demos", label: "Demo Requests", icon: Calendar },
         { to: "/rep/handovers", label: "Handovers", icon: ArrowRightLeft },
+        { to: "/settings", label: "Settings", icon: Settings },
       ]
 
   const sidebarContent = (
@@ -62,7 +67,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <Button
             variant="ghost"
             size="icon-sm"
-            onClick={() => setMobileOpen(false)}
+            onClick={onMobileClose}
           >
             <X className="h-4 w-4" />
           </Button>
@@ -84,7 +89,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <Link
             key={to}
             to={to}
-            onClick={() => isMobile && setMobileOpen(false)}
+            onClick={() => isMobile && onMobileClose?.()}
             className={cn(
               "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
               location.pathname === to
@@ -121,36 +126,34 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           )}
         </div>
         {!collapsed && (
-          <Button
-            variant="ghost"
-            className="mt-2 w-full justify-start text-sm"
-            onClick={logout}
-          >
-            <LogOut className="h-4 w-4" />
-            Sign Out
-          </Button>
+          <>
+            <div className="mt-2 flex items-center gap-1">
+              <ThemeToggle />
+              <span className="text-xs text-muted-foreground">Toggle theme</span>
+            </div>
+            <Button
+              variant="ghost"
+              className="mt-1 w-full justify-start text-sm"
+              onClick={logout}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
+          </>
         )}
       </div>
     </div>
   )
 
-  // Mobile: overlay sidebar
+  // Mobile: overlay sidebar (controlled by parent via mobileOpen prop)
   if (isMobile) {
     return (
       <>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="fixed left-3 top-3 z-50"
-          onClick={() => setMobileOpen(true)}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
         {mobileOpen && (
           <div className="fixed inset-0 z-40">
             <div
               className="absolute inset-0 bg-black/50"
-              onClick={() => setMobileOpen(false)}
+              onClick={onMobileClose}
             />
             <aside className="relative h-full w-64 animate-slide-in-right border-r bg-card">
               {sidebarContent}

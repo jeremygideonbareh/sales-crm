@@ -245,21 +245,21 @@ export default function DemoRequests() {
                     </span>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {demo.status === 'pending' && (
                     <>
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(demo.id, 'scheduled')}>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(demo.id, 'scheduled')} className="min-h-[36px]">
                         <Calendar className="h-3 w-3" />
                         Schedule
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(demo.id, 'cancelled')}>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(demo.id, 'cancelled')} className="min-h-[36px]">
                         <XCircle className="h-3 w-3" />
                         Cancel
                       </Button>
                     </>
                   )}
                   {demo.status === 'scheduled' && (
-                    <Button size="sm" variant="default" onClick={() => updateStatus(demo.id, 'completed')}>
+                    <Button size="sm" variant="default" onClick={() => updateStatus(demo.id, 'completed')} className="min-h-[36px]">
                       <CheckCircle2 className="h-3 w-3" />
                       Mark Completed
                     </Button>

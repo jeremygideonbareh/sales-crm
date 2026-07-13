@@ -218,7 +218,7 @@ export default function CallingView() {
       <Confetti active={showConfetti} />
 
       <PageHeader title="Calling Queue">
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <CallTimer
             active={callActive}
             onDurationChange={handleDurationChange}
@@ -268,9 +268,9 @@ export default function CallingView() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center gap-3 rounded-lg bg-muted p-4">
-            <Phone className="h-6 w-6 text-emerald-400" />
-            <span className="text-2xl font-bold tracking-wider">
+          <div className="flex items-center gap-3 rounded-lg bg-muted p-3 sm:p-4">
+            <Phone className="h-6 w-6 shrink-0 text-emerald-400" />
+            <span className="text-xl sm:text-2xl font-bold tracking-wider break-all">
               {lead.phone}
             </span>
             <Tooltip content={copied ? "Copied!" : "Copy phone number"}>
@@ -278,6 +278,7 @@ export default function CallingView() {
                 variant="ghost"
                 size="icon"
                 onClick={copyPhone}
+                className="h-9 w-9 shrink-0"
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -312,14 +313,14 @@ export default function CallingView() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-3">
             {OUTCOMES.map(
               ({ status, label, icon: Icon, variant }) => (
                 <Button
                   key={status}
                   variant={variant}
                   size="lg"
-                  className="h-auto flex-col gap-1 py-4"
+                  className="h-auto min-h-[56px] flex-col gap-1 py-3 sm:py-4"
                   disabled={updating}
                   onClick={() => handleOutcome(status)}
                 >
@@ -334,7 +335,7 @@ export default function CallingView() {
               shimmerColor="#34d399"
               background="rgba(4, 120, 87, 0.3)"
               borderRadius="0.75rem"
-              className="h-auto flex-col gap-1 py-4"
+              className="h-auto min-h-[56px] flex-col gap-1 py-3 sm:py-4"
               disabled={updating}
               onClick={() => setShowDealInput(true)}
             >

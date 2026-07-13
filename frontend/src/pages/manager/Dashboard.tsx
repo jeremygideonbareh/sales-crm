@@ -126,7 +126,7 @@ export default function Dashboard() {
       </PageHeader>
 
       {/* KPI Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="Total Calls"
           value={data.kpi.total_calls}
@@ -160,7 +160,7 @@ export default function Dashboard() {
       </div>
 
       {/* Charts + Activity Grid */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
         {/* Bar Chart - Rep Performance */}
         <Card className="lg:col-span-2">
           <CardHeader>
@@ -215,7 +215,7 @@ export default function Dashboard() {
       </div>
 
       {/* Trend + Pie Charts */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Weekly Trend</CardTitle>
@@ -324,7 +324,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+            <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
               {pipelineOverview.stages.map((stage) => {
                 const statusConfig = LEAD_STATUS[stage.status as keyof typeof LEAD_STATUS]
                 return (

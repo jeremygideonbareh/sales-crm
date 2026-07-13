@@ -35,8 +35,12 @@ async def create_sequence(db: AsyncSession, data: EmailSequenceCreate, created_b
         db.add(step)
 
     await db.commit()
-    await db.refresh(seq)
-    return seq
+    result = await db.execute(
+        select(EmailSequence)
+        .options(selectinload(EmailSequence.steps))
+        .where(EmailSequence.id == seq.id)
+    )
+    return result.scalar_one()
 
 
 async def get_sequences(db: AsyncSession) -> list[EmailSequence]:
@@ -67,8 +71,12 @@ async def update_sequence(db: AsyncSession, sequence_id: int, data: dict) -> Ema
                 value = SequenceTrigger(value)
             setattr(seq, key, value)
     await db.commit()
-    await db.refresh(seq)
-    return seq
+    result = await db.execute(
+        select(EmailSequence)
+        .options(selectinload(EmailSequence.steps))
+        .where(EmailSequence.id == seq.id)
+    )
+    return result.scalar_one()
 
 
 async def delete_sequence(db: AsyncSession, sequence_id: int) -> bool:
@@ -105,8 +113,12 @@ async def set_steps(db: AsyncSession, sequence_id: int, steps: list[SequenceStep
         db.add(step)
 
     await db.commit()
-    await db.refresh(seq)
-    return seq
+    result = await db.execute(
+        select(EmailSequence)
+        .options(selectinload(EmailSequence.steps))
+        .where(EmailSequence.id == seq.id)
+    )
+    return result.scalar_one()
 
 
 async def get_email_logs(db: AsyncSession, lead_id: int | None = None, limit: int = 50) -> list[EmailLog]:

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey, Enum as SAEnum
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
 
@@ -32,12 +33,16 @@ class EmailSequence(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
+    steps = relationship("SequenceStep", back_populates="sequence", order_by="SequenceStep.step_order", cascade="all, delete-orphan")
+
 
 class SequenceStep(Base):
     __tablename__ = "sequence_steps"
 
     id = Column(Integer, primary_key=True, index=True)
     sequence_id = Column(Integer, ForeignKey("email_sequences.id", ondelete="CASCADE"), nullable=False, index=True)
+
+    sequence = relationship("EmailSequence", back_populates="steps")
     step_order = Column(Integer, nullable=False)
     step_type = Column(SAEnum(StepType), nullable=False)
     delay_days = Column(Integer, nullable=True)

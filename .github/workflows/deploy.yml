@@ -58,4 +58,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: "86822207a3e81b46ffc1eaec4dc69b5f"
+          workingDirectory: frontend
           command: pages deploy dist --project-name=sales-crm --branch=production

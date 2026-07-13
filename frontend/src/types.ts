@@ -6,6 +6,24 @@ export interface UserResponse {
   is_active: boolean
 }
 
+export interface AssignedLeadResponse {
+  id: number
+  business_name: string
+  contact_name: string
+  phone: string
+  email: string | null
+  website: string | null
+  notes: string | null
+  status: string
+  deal_value: number | null
+  commission: number | null
+  created_at: string | null
+  updated_at: string | null
+  call_count: number
+  last_call_status: string | null
+  last_call_at: string | null
+}
+
 export interface LeadResponse {
   id: number
   business_name: string

@@ -52,6 +52,26 @@ class StatusUpdateRequest(BaseModel):
         return v
 
 
+class AssignedLeadResponse(BaseModel):
+    id: int
+    business_name: str
+    contact_name: str
+    phone: str
+    email: Optional[str] = None
+    website: Optional[str] = None
+    notes: Optional[str] = None
+    status: str
+    deal_value: Optional[float] = None
+    commission: Optional[float] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    call_count: int = 0
+    last_call_status: Optional[str] = None
+    last_call_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+
 class DeleteLeadsRequest(BaseModel):
     lead_ids: list[int]
 

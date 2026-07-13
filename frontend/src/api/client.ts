@@ -59,6 +59,7 @@ export const leadsApi = {
 }
 
 export const repsApi = {
+  assignedLeads: () => api.get('/reps/assigned-leads').then((r) => r.data),
   nextLead: () => api.get('/reps/next-lead').then((r) => r.data),
   updateStatus: (leadId: number, data: { status: string; notes?: string; deal_value?: number }) =>
     api.put(`/reps/leads/${leadId}/status`, data).then((r) => r.data),

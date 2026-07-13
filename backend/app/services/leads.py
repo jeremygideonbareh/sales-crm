@@ -109,6 +109,49 @@ async def update_lead_status(
     return lead
 
 
+async def get_assigned_leads(
+    db: AsyncSession, user_id: int
+) -> list[tuple[Lead, int, str | None, str | None]]:
+    call_count_subq = (
+        select(func.count(CallLog.id))
+        .where(CallLog.lead_id == Lead.id)
+        .correlate(Lead)
+        .scalar_subquery()
+    )
+    latest_status_subq = (
+        select(CallLog.status_after)
+        .where(CallLog.lead_id == Lead.id)
+        .order_by(CallLog.created_at.desc())
+        .limit(1)
+        .correlate(Lead)
+        .scalar_subquery()
+    )
+    latest_call_at_subq = (
+        select(CallLog.created_at)
+        .where(CallLog.lead_id == Lead.id)
+        .order_by(CallLog.created_at.desc())
+        .limit(1)
+        .correlate(Lead)
+        .scalar_subquery()
+    )
+
+    query = (
+        select(
+            Lead,
+            call_count_subq.label("call_count"),
+            latest_status_subq.label("last_call_status"),
+            latest_call_at_subq.label("last_call_at"),
+        )
+        .where(Lead.assigned_to == user_id)
+        .order_by(
+            latest_call_at_subq.asc().nullsfirst(),
+            Lead.updated_at.desc().nullslast(),
+        )
+    )
+    rows = (await db.execute(query)).all()
+    return [(r[0], r[1] or 0, r[2], r[3]) for r in rows]
+
+
 async def assign_leads(db: AsyncSession, lead_ids: list[int], rep_id: int, assigned_by: int) -> int:
     result = await db.execute(select(User).where(User.id == rep_id, User.role == UserRole.REP))
     if not result.scalar_one_or_none():

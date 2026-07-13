@@ -9,16 +9,32 @@ from ..models.lead import Lead, LeadStatus
 from ..models.call_log import CallLog
 from ..models.demo_request import DemoRequest, DemoStatus
 from ..models.handover import Handover, HandoverStatus
-from ..schemas.lead import NextLeadResponse, StatusUpdateRequest, LeadResponse
+from ..schemas.lead import NextLeadResponse, StatusUpdateRequest, LeadResponse, AssignedLeadResponse
 from ..schemas.demo import DemoRequestCreate, DemoRequestUpdate, DemoRequestResponse
 from ..schemas.handover import HandoverCreate, HandoverResponse
 from ..schemas.call_log import CallLogResponse
 from ..schemas.analytics import RepDashboardResponse
-from ..services.leads import get_next_lead, update_lead_status
+from ..services.leads import get_next_lead, update_lead_status, get_assigned_leads
 from ..services.analytics import get_rep_dashboard
 from .deps import get_current_user
 
 router = APIRouter(prefix="/api/reps", tags=["reps"])
+
+
+@router.get("/assigned-leads", response_model=list[AssignedLeadResponse])
+async def assigned_leads(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    rows = await get_assigned_leads(db, user.id)
+    result = []
+    for lead, call_count, last_call_status, last_call_at in rows:
+        d = AssignedLeadResponse.model_validate(lead)
+        d.call_count = call_count
+        d.last_call_status = last_call_status
+        d.last_call_at = last_call_at
+        result.append(d)
+    return result
 
 
 @router.get("/next-lead", response_model=NextLeadResponse)

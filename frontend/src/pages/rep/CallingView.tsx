@@ -362,37 +362,6 @@ export default function CallingView() {
           <div className="flex-1 overflow-y-auto p-4 lg:p-6">
             {lead ? (
               <div className="mx-auto max-w-2xl space-y-4 lg:space-y-5">
-                {/* ─── Leads Vertical List (mobile) ─── */}
-                <div className="lg:hidden">
-                  <div className="space-y-2">
-                    {leads.map((l) => {
-                      const cfg = LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]
-                      return (
-                        <button
-                          key={l.id}
-                          onClick={() => selectLead(l.id)}
-                          className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all active:scale-95 ${
-                            l.id === selectedId
-                              ? "border-ring bg-muted ring-1 ring-ring"
-                              : "border-border bg-card hover:bg-muted"
-                          }`}
-                        >
-                          <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="truncate text-sm font-semibold">{l.business_name}</span>
-                            </div>
-                            <span className="truncate text-xs text-muted-foreground">{l.contact_name}</span>
-                          </div>
-                          <span className={`shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full ${cfg?.bg || "bg-muted"} ${cfg?.color || "text-muted-foreground"}`}>
-                            {cfg?.label || l.status}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
                 {/* ─── Lead Header (mobile: name only) ─── */}
                 <div className="flex items-start gap-3 lg:hidden">
                   <div className="min-w-0 flex-1">
@@ -503,7 +472,37 @@ export default function CallingView() {
                   </div>
                 )}
 
-
+                {/* ─── Leads List (mobile, below details) ─── */}
+                <div className="lg:hidden">
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">All Leads</p>
+                    {leads.map((l) => {
+                      const cfg = LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]
+                      return (
+                        <button
+                          key={l.id}
+                          onClick={() => selectLead(l.id)}
+                          className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all active:scale-95 ${
+                            l.id === selectedId
+                              ? "border-ring bg-muted ring-1 ring-ring"
+                              : "border-border bg-card hover:bg-muted"
+                          }`}
+                        >
+                          <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate text-sm font-semibold">{l.business_name}</span>
+                            </div>
+                            <span className="truncate text-xs text-muted-foreground">{l.contact_name}</span>
+                          </div>
+                          <span className={`shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full ${cfg?.bg || "bg-muted"} ${cfg?.color || "text-muted-foreground"}`}>
+                            {cfg?.label || l.status}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
 
                 {/* ─── Outcome Buttons (desktop) ─── */}
                 <div className="hidden lg:block space-y-3">

@@ -168,7 +168,7 @@ def build_sales_guide(pdf):
         "The sidebar on the left (or the bottom navigation bar on mobile) gives you access to all features:"
     )
     pdf.bullet("Dashboard - Your personal performance overview")
-    pdf.bullet("Calling - The lead calling queue")
+    pdf.bullet("Calling - The lead calling workspace")
     pdf.bullet("Demo Requests - Manage client demo appointments")
     pdf.bullet("Handovers - Handoff clients to the development team")
     pdf.bullet("Settings - Update your password")
@@ -218,80 +218,119 @@ def build_sales_guide(pdf):
     pdf.section_title("3", "Calling Leads")
 
     pdf.body_text(
-        "The Calling Queue is the core workspace for sales reps. This is where you work through "
-        "your assigned leads one at a time."
+        "The Calling page is your main workspace for contacting leads. Unlike a simple queue "
+        "that shows one lead at a time, you can now see ALL your assigned leads, choose which "
+        "one to call, and view complete business details alongside the call interface."
     )
 
-    pdf.subsection_title("3.1 The Lead Card")
+    pdf.subsection_title("3.1 Layout Overview")
     pdf.body_text(
-        "When you open the Calling page, you will see a lead card showing:"
+        "The Calling page has a split layout that adapts to your device:"
     )
-    pdf.bullet("Business name (large heading)")
-    pdf.bullet("Contact person's name")
-    pdf.bullet("Website link (clickable, opens in a new tab)")
-    pdf.bullet("Lead ID badge")
-    pdf.bullet("Phone number (large text with a copy button next to it)")
-
-    pdf.subsection_title("3.2 Call Timer")
+    pdf.bullet_bold_lead("Desktop (tablet or wider)", " A lead list appears on the left sidebar. "
+        "Click any lead to view their details and call interface on the right.")
+    pdf.bullet_bold_lead("Mobile (phone)", " A horizontal scrollable row of lead pills appears at the top. "
+        "Tap a pill to select that lead. Tap \"All Leads\" to open a full list in a bottom drawer.")
     pdf.body_text(
-        "A timer starts automatically when a lead is loaded. It shows minutes:seconds and changes color:"
+        "The selected lead shows a status badge in the top-right header next to the call timer."
+    )
+
+    pdf.subsection_title("3.2 The Lead List (Choosing Who to Call)")
+    pdf.body_text(
+        "The lead list shows all leads assigned to you, ordered by priority (uncalled leads first, "
+        "then by most recent activity). Each entry displays:"
+    )
+    pdf.bullet("Business name and contact person")
+    pdf.bullet("A colored status dot (green = interested, amber = no answer, etc.)")
+    pdf.bullet("Number of previous calls made to this lead (if any)")
+    pdf.bullet("An arrow indicator on the currently selected lead")
+    pdf.body_text(
+        "On mobile, tap \"All Leads\" to open the lead picker drawer from the bottom of the screen. "
+        "This drawer shows the full list with status badges for easy scanning. Tap any lead to select it."
+    )
+
+    pdf.subsection_title("3.3 Lead Detail Card")
+    pdf.body_text(
+        "When a lead is selected, a detail card shows all relevant information:"
+    )
+    pdf.bullet_bold_lead("Phone Number", " Shown in large bold text with a formatted number. "
+        "Tap the green \"Call Now\" button to initiate a phone call via your device's dialer. "
+        "Use the copy button next to it to copy the number to your clipboard.")
+    pdf.bullet_bold_lead("Email", " Shown as a clickable link that opens your email client.")
+    pdf.bullet_bold_lead("Website", " Shown as a clickable link that opens in a new browser tab.")
+    pdf.bullet_bold_lead("Deal Value", " If a deal value has been set, it is displayed with the commission percentage.")
+    pdf.bullet_bold_lead("Created Date", " When this lead was added to the system.")
+    pdf.body_text(
+        "Below the detail card, any existing notes for the lead are displayed. "
+        "On mobile, you can also see a \"Switch Lead\" horizontal scroll section for quick navigation."
+    )
+
+    pdf.subsection_title("3.4 Call Timer")
+    pdf.body_text(
+        "A timer in the header starts when you select a lead. It shows minutes:seconds and changes color:"
     )
     pdf.bullet("Green: Under 30 seconds (quick call)")
     pdf.bullet("Amber: 30 seconds to 2 minutes")
     pdf.bullet("Red: Over 2 minutes")
     pdf.body_text(
-        "The timer resets each time you move to a new lead. Use it to track your call durations."
+        "The timer resets when you switch to a different lead."
     )
 
-    pdf.subsection_title("3.3 Call Outcomes")
+    pdf.subsection_title("3.5 Logging an Outcome (Desktop)")
     pdf.body_text(
-        "After finishing a call, select one of the outcome buttons to log the result:"
+        "On desktop, the outcome buttons are shown directly below the lead detail card in a grid:"
     )
-    pdf.bullet("No Answer - The lead did not answer (they may reappear in your queue later)")
-    pdf.bullet("Not Interested - The lead declined (they will NOT reappear)")
+    pdf.bullet("No Answer - The lead did not answer (will reappear for follow-up)")
+    pdf.bullet("Not Interested - The lead declined")
     pdf.bullet("Interested - The lead showed interest (prompt to schedule a demo)")
     pdf.bullet("Pitching - You are actively pitching to this lead")
-    pdf.body_text("Each outcome updates the lead's status and logs the call automatically.")
-
-    pdf.subsection_title("3.4 Closing a Deal")
+    pdf.bullet("Demo Scheduled - A demo has been booked")
+    pdf.bullet("Negotiation - Price and terms being negotiated")
     pdf.body_text(
-        "When a lead agrees to purchase, click the \"Deal Closed\" button. A deal value input will appear. "
-        "Enter the deal amount and click \"Confirm Deal\". Your 20% commission is calculated automatically. "
-        "A confetti animation celebrates the closed deal!"
+        "Below the grid, a \"Deal Closed\" button opens a deal value input. "
+        "Enter the amount and confirm. Your 20% commission is calculated automatically."
+    )
+    pdf.body_text(
+        "A notes textarea below the buttons lets you record call details before saving."
     )
 
-    pdf.subsection_title("3.5 Notes")
+    pdf.subsection_title("3.6 Logging an Outcome (Mobile)")
     pdf.body_text(
-        "Use the Notes textarea to record important details about the call. These notes are saved "
-        "along with the call log and can be reviewed later by your manager."
+        "On mobile, a sticky \"Log Outcome\" button sits at the bottom of the screen. "
+        "Tap it to open a bottom drawer with all outcome options:"
+    )
+    pdf.bullet("Six outcome buttons arranged in a 2-column grid")
+    pdf.bullet("A full-width \"Deal Closed\" button at the bottom of the grid")
+    pdf.bullet("A notes textarea and a \"Save Outcome\" button")
+    pdf.body_text(
+        "The outcome drawer slides up from the bottom of the screen and can be dismissed by tapping "
+        "outside it or pressing the Escape key."
     )
 
-    pdf.subsection_title("3.6 Call History")
+    pdf.subsection_title("3.7 Closing a Deal")
     pdf.body_text(
-        "Click the \"History\" toggle button to see all previous call logs for the current lead. "
-        "This helps you understand the context before making a new call."
+        "When a lead agrees to purchase, select \"Deal Closed\". Enter the deal amount and confirm. "
+        "Your 20% commission is calculated automatically. A confetti animation celebrates the closed deal!"
     )
 
-    pdf.subsection_title("3.7 Copy Phone & Skip")
-    pdf.bullet("Copy Phone: Click the copy icon next to the phone number to copy it to your clipboard for dialing")
-    pdf.bullet("Skip: Click \"Skip/Refresh Queue\" to move to the next lead without logging an outcome")
-
-    pdf.subsection_title("3.8 Log Callback Attempt")
+    pdf.subsection_title("3.8 Notes")
     pdf.body_text(
-        "If the current lead status is \"No Answer\", a pulsating \"Log Callback Attempt\" button appears. "
-        "Click it to log that you tried calling again."
+        "Notes help you remember important details about each call. On desktop, the notes textarea "
+        "is shown alongside the outcome buttons. On mobile, it appears inside the outcome drawer. "
+        "Notes are saved with the call log and can be reviewed later."
     )
 
-    pdf.subsection_title("3.9 Interested CTA Banner")
+    pdf.subsection_title("3.9 Call Info Badges")
     pdf.body_text(
-        "When a lead's status is \"Interested\", a green banner appears at the top of the lead card "
-        "with a \"Create Demo\" button. Click it to immediately create a demo request for this client."
+        "Below the lead detail card, small badges show useful statistics:"
     )
+    pdf.bullet_bold_lead("Call count", " How many times this lead has been called")
+    pdf.bullet_bold_lead("Last call time", " How long ago the last call was (e.g. \"2h ago\", \"3d ago\")")
 
-    pdf.subsection_title("3.10 All Caught Up")
+    pdf.subsection_title("3.10 Empty State")
     pdf.body_text(
-        "When you have no more leads in your queue, a congratulations message appears: "
-        "\"All Caught Up! No leads in your queue. Great work!\" Click \"Check Again\" to refresh."
+        "When you have no assigned leads, a clean \"All Caught Up!\" message is displayed "
+        "with a checkmark icon. Leads appear here as soon as your manager assigns them to you."
     )
 
     pdf.tip_box("PRO TIP:", "Always add notes to your calls. Good notes help your manager and the dev team understand the client's needs.")
@@ -502,9 +541,10 @@ def build_admin_guide(pdf):
         ("4", "Leaderboard - Tracking Rep Performance"),
         ("5", "Admin Users - Managing Your Team"),
         ("6", "Pipeline Overview"),
-        ("7", "Settings - Managing Your Account"),
-        ("8", "Notifications"),
-        ("9", "Technical Reference - Deployment & Maintenance"),
+        ("7", "Email Sequences - Automated Follow-ups"),
+        ("8", "Settings - Managing Your Account"),
+        ("9", "Notifications"),
+        ("10", "Technical Reference - Deployment & Maintenance"),
     ]
     for num, title in toc:
         pdf.set_font("Segoe", "", 11)
@@ -522,21 +562,24 @@ def build_admin_guide(pdf):
         "Open the CRM URL in your browser. On the login screen, sign in with your manager credentials."
     )
 
-    pdf.subsection_title("1.2 Demo Credentials")
-    pdf.body_text("The following accounts are pre-seeded in the system:")
+    pdf.subsection_title("1.2 Login Credentials")
+    pdf.body_text(
+        "Use the credentials provided by your system administrator to sign in. "
+        "The following accounts are available:"
+    )
     pdf.set_font("Segoe", "B", 10)
     pdf.set_text_color(40, 40, 40)
-    pdf.cell(50, 6, "Manager Account:")
+    pdf.cell(0, 6, "Manager Account:", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Segoe", "", 10)
-    pdf.cell(0, 6, "admin@agency.com / admin123", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "   admin@agency.com / @Admin12345", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
     pdf.set_font("Segoe", "B", 10)
-    pdf.cell(50, 6, "Sales Reps:")
+    pdf.set_text_color(40, 40, 40)
+    pdf.cell(0, 6, "Sales Reps:", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Segoe", "", 10)
-    pdf.cell(0, 6, "ashba@agency.com / ashba123", new_x="LMARGIN", new_y="NEXT")
-    pdf.cell(50, 6, "")
-    pdf.cell(0, 6, "jai@agency.com / jai123", new_x="LMARGIN", new_y="NEXT")
-    pdf.cell(50, 6, "")
-    pdf.cell(0, 6, "agnas@agency.com / agnas123", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "   ashba@agency.com / @Admin12345", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "   jai@agency.com / @Admin12345", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "   agnas@agency.com / @Admin12345", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
 
     pdf.tip_box("IMPORTANT:", "Change the default passwords immediately after first login, especially the admin account.")
@@ -761,9 +804,76 @@ def build_admin_guide(pdf):
     pdf.subsection_title("Commission Model")
     pdf.body_text("Reps earn 20% commission on every deal they close. Commission is calculated automatically.")
 
-    # --- 7. SETTINGS ---
+    # --- 7. EMAIL SEQUENCES ---
     pdf.add_page()
-    pdf.section_title("7", "Settings - Managing Your Account")
+    pdf.section_title("7", "Email Sequences - Automated Follow-ups")
+
+    pdf.body_text(
+        "Email Sequences allow you to create automated email campaigns that trigger based on "
+        "lead status changes. This feature helps maintain consistent follow-up with leads "
+        "without manual effort."
+    )
+
+    pdf.subsection_title("7.1 Creating a New Sequence")
+    pdf.bullet("Go to the Email Sequences page from the sidebar")
+    pdf.bullet("Click the \"New Sequence\" button")
+    pdf.bullet("Enter a Sequence Name (e.g. \"New Lead Welcome\")")
+    pdf.bullet("Add a Description explaining the sequence purpose")
+    pdf.bullet("Choose the Trigger - when the sequence should start:")
+    pdf.bullet("Lead Assigned: Starts when a lead is assigned to a rep", indent=20)
+    pdf.bullet("Status Change: Starts when a lead enters a specific stage", indent=20)
+    pdf.bullet("Manual: Triggered manually by the rep", indent=20)
+    pdf.bullet("If using \"Status Change\", select the trigger stage")
+    pdf.bullet("Click \"Save Sequence\" to create it")
+
+    pdf.subsection_title("7.2 Building Sequence Steps")
+    pdf.body_text(
+        "After creating a sequence, add steps using the Sequence Builder:"
+    )
+    pdf.bullet_bold_lead("Send Email", " Compose an email with subject and body. "
+        "The email will be sent to the lead's email address automatically.")
+    pdf.bullet_bold_lead("Delay", " Wait a specified number of days before the next step "
+        "(e.g. wait 3 days after the initial email).")
+    pdf.bullet_bold_lead("Update Stage", " Automatically advance the lead to a new pipeline stage "
+        "after this step completes.")
+    pdf.bullet_bold_lead("Notify", " Send a notification to a manager or the assigned rep.")
+    pdf.bullet_bold_lead("Condition", " Branch based on lead data (e.g. only send if lead is interested).")
+    pdf.body_text(
+        "Steps execute in order. Use the delay step strategically to space out communications. "
+        "You can reorder steps by editing step numbers in the builder."
+    )
+
+    pdf.subsection_title("7.3 Viewing Email Logs")
+    pdf.body_text(
+        "The Logs tab shows all emails sent by the system, including:"
+    )
+    pdf.bullet("Recipient email address")
+    pdf.bullet("Email subject line")
+    pdf.bullet("Sent date and time")
+    pdf.bullet("Delivery status (sent/failed)")
+    pdf.bullet("Open and click tracking (if available)")
+    pdf.body_text(
+        "Use the sequence filter to view logs for a specific sequence, or view all logs together."
+    )
+
+    pdf.subsection_title("7.4 Managing Sequences")
+    pdf.body_text(
+        "From the Email Sequences page, you can:"
+    )
+    pdf.bullet("View all sequences in a list with their name, description, and active status")
+    pdf.bullet("Click a sequence to open its detail view with step builder and logs")
+    pdf.bullet("Toggle a sequence on/off using the active switch")
+    pdf.bullet("Delete sequences that are no longer needed")
+    pdf.body_text(
+        "Only active sequences will execute their steps when triggered. "
+        "Inactive sequences remain saved but do not send emails."
+    )
+
+    pdf.tip_box("TIP:", "Start with a simple welcome sequence: Send email -> Wait 3 days -> Send follow-up -> Wait 5 days -> Send final offer.")
+
+    # --- 8. SETTINGS ---
+    pdf.add_page()
+    pdf.section_title("8", "Settings - Managing Your Account")
 
     pdf.body_text(
         "The Settings page displays your profile and lets you change your password."
@@ -778,9 +888,9 @@ def build_admin_guide(pdf):
     pdf.bullet("Confirm new password")
     pdf.bullet("Click \"Change Password\"")
 
-    # --- 8. NOTIFICATIONS ---
+    # --- 9. NOTIFICATIONS ---
     pdf.add_page()
-    pdf.section_title("8", "Notifications")
+    pdf.section_title("9", "Notifications")
 
     pdf.body_text(
         "Managers receive notifications for key events across the entire agency. "
@@ -795,9 +905,9 @@ def build_admin_guide(pdf):
     pdf.bullet("Handovers created or completed")
     pdf.bullet("Deals closed by any rep")
 
-    # --- 9. TECHNICAL REFERENCE ---
+    # --- 10. TECHNICAL REFERENCE ---
     pdf.add_page()
-    pdf.section_title("9", "Technical Reference")
+    pdf.section_title("10", "Technical Reference")
 
     pdf.subsection_title("9.1 System Architecture")
     pdf.body_text("The CRM consists of two main components:")

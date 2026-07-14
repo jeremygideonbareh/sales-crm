@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react"
+import { useEffect, useState, useMemo } from "react"
 import {
   Phone,
   PhoneOff,
@@ -26,7 +26,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ShimmerButton } from "@/components/ui/shimmer-button"
-import { CallTimer } from "@/components/rep/CallTimer"
+
 import { Confetti } from "@/components/ui/confetti"
 import { toast } from "@/components/ui/toast"
 import { Drawer } from "@/components/ui/drawer"
@@ -72,7 +72,7 @@ export default function CallingView() {
     [leads, selectedId]
   )
 
-  const fetchLeads = useCallback(async () => {
+  const fetchLeads = async () => {
     setLoading(true)
     try {
       const data = await repsApi.assignedLeads()
@@ -83,15 +83,11 @@ export default function CallingView() {
     } finally {
       setLoading(false)
     }
-  }, [selectedId])
+  }
 
   useEffect(() => {
     fetchLeads()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleDurationChange = useCallback((_s: number) => {
-    /* duration tracked if needed */
-  }, [])
 
   const handleOutcome = async (status: string) => {
     if (!selected) return
@@ -352,7 +348,6 @@ export default function CallingView() {
                 <h1 className="text-base font-semibold lg:text-lg">Calling</h1>
               </div>
               <div className="flex items-center gap-3">
-                <CallTimer active={callActive} onDurationChange={handleDurationChange} />
                 {lead && (
                   <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusBadgeStyle(lead.status)}`}>
                     <span className={`h-1.5 w-1.5 rounded-full ${statusDot(lead.status)}`} style={{ backgroundColor: "currentColor" }} />
@@ -367,7 +362,36 @@ export default function CallingView() {
           <div className="flex-1 p-4 lg:p-6">
             {lead ? (
               <div className="mx-auto max-w-2xl space-y-4 lg:space-y-5">
-                {/* ─── Lead Header (mobile: back + name) ─── */}
+                {/* ─── Leads Horizontal Scroll (mobile, at top) ─── */}
+                <div className="lg:hidden -mx-4 px-4">
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                    {leads.map((l) => {
+                      const cfg = LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]
+                      return (
+                        <button
+                          key={l.id}
+                          onClick={() => selectLead(l.id)}
+                          className={`flex shrink-0 flex-col items-start gap-1 rounded-2xl border px-4 py-3 text-left transition-all active:scale-95 min-w-[160px] ${
+                            l.id === selectedId
+                              ? "border-ring bg-muted ring-1 ring-ring"
+                              : "border-border bg-card hover:bg-muted"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 w-full">
+                            <span className={`h-2 w-2 shrink-0 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
+                            <span className="truncate text-sm font-semibold">{l.business_name}</span>
+                          </div>
+                          <span className="truncate text-xs text-muted-foreground pl-4">{l.contact_name}</span>
+                          <span className={`mt-0.5 self-start text-[10px] font-medium px-2 py-0.5 rounded-full ${cfg?.bg || "bg-muted"} ${cfg?.color || "text-muted-foreground"}`}>
+                            {cfg?.label || l.status}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* ─── Lead Header (mobile: name only) ─── */}
                 <div className="flex items-start gap-3 lg:hidden">
                   <div className="min-w-0 flex-1">
                     <h2 className="text-xl font-bold leading-tight">{lead.business_name}</h2>
@@ -477,29 +501,7 @@ export default function CallingView() {
                   </div>
                 )}
 
-                {/* ─── Leads Horizontal Scroll (mobile: below details) ─── */}
-                <div className="lg:hidden -mx-4 px-4">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Switch Lead</p>
-                  <div className="flex gap-2 overflow-x-auto pb-2">
-                    {leads.map((l) => {
-                      const cfg = LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]
-                      return (
-                        <button
-                          key={l.id}
-                          onClick={() => selectLead(l.id)}
-                          className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-medium transition-all active:scale-95 ${
-                            l.id === selectedId
-                              ? "border-ring bg-muted"
-                              : "border-transparent bg-muted/50 hover:bg-muted"
-                          }`}
-                        >
-                          <span className={`h-2 w-2 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
-                          {l.business_name}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
+
 
                 {/* ─── Outcome Buttons (desktop) ─── */}
                 <div className="hidden lg:block space-y-3">

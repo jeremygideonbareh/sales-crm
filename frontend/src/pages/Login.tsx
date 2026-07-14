@@ -42,19 +42,19 @@ export default function Login() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
-      <Particles quantity={40} color="#34d399" speed={0.3} />
+    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background px-4 py-6">
+      <Particles quantity={30} color="#34d399" speed={0.3} />
 
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/10 via-background to-background" />
 
       <div className="relative w-full max-w-sm animate-fade-in">
         {/* Logo */}
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400/20 to-emerald-600/20 ring-1 ring-emerald-500/20">
-            <PhoneCall className="h-8 w-8 text-emerald-400" />
+        <div className="mb-6 text-center sm:mb-8">
+          <div className="mx-auto mb-3 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400/20 to-emerald-600/20 ring-1 ring-emerald-500/20">
+            <PhoneCall className="h-7 w-7 sm:h-8 sm:w-8 text-emerald-400" />
           </div>
-          <h1 className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-2xl font-bold text-transparent">
+          <h1 className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-xl font-bold text-transparent sm:text-2xl">
             Sales CRM
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ export default function Login() {
         </div>
 
         {/* Login Card */}
-        <div className="relative rounded-xl bg-card p-6 ring-1 ring-foreground/10">
+        <div className="relative rounded-xl bg-card p-5 sm:p-6 ring-1 ring-foreground/10">
           <BorderBeam size={150} duration={6} />
 
           <form onSubmit={handleSubmit} className="space-y-4">

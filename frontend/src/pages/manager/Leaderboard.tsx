@@ -201,7 +201,7 @@ export default function Leaderboard() {
       <motion.div
         ref={podiumRef}
         variants={sectionVariants}
-        className="grid gap-4 sm:grid-cols-3"
+        className="grid gap-4 grid-cols-1 sm:grid-cols-3"
       >
         {sorted.slice(0, 3).map((entry, i) => (
           <motion.div
@@ -388,7 +388,7 @@ export default function Leaderboard() {
             <CardTitle>Deals by Rep</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-72">
+            <div className="h-56 sm:h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={sorted} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
                   <defs>

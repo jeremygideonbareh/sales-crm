@@ -150,16 +150,16 @@ export default function CallingView() {
   // ── Loading state ──
   if (loading && leads.length === 0) {
     return (
-      <div className="flex gap-4 p-4 lg:p-6">
+      <div className="flex flex-col gap-4 p-4 lg:flex-row lg:p-6">
         <div className="hidden w-64 shrink-0 flex-col gap-2 lg:flex">
           {Array.from({ length: 5 }).map((_, i) => (
             <Skeleton key={i} className="h-20 rounded-xl" />
           ))}
         </div>
         <div className="flex-1 space-y-4">
-          <Skeleton className="h-8 w-64" />
-          <Skeleton className="h-48 rounded-xl" />
-          <Skeleton className="h-32 rounded-xl" />
+          <Skeleton className="h-8 w-48 sm:w-64" />
+          <Skeleton className="h-40 rounded-xl sm:h-48" />
+          <Skeleton className="h-28 rounded-xl sm:h-32" />
         </div>
       </div>
     )
@@ -297,7 +297,7 @@ export default function CallingView() {
       </Drawer>
 
       {/* ─── Main Layout ─── */}
-      <div className="flex h-[calc(100vh-3.5rem)] lg:h-[calc(100vh-4rem)]">
+      <div className="flex min-h-[calc(100vh-8rem)] flex-col lg:h-[calc(100vh-4rem)] lg:flex-row">
         {/* ─── Sidebar Lead List (desktop) ─── */}
         <aside className="hidden w-64 shrink-0 border-r lg:flex lg:flex-col">
           <div className="flex items-center justify-between border-b px-4 py-3">
@@ -333,7 +333,7 @@ export default function CallingView() {
         </aside>
 
         {/* ─── Main Content ─── */}
-        <main className="flex flex-1 flex-col overflow-y-auto">
+        <main className="flex flex-1 flex-col overflow-x-hidden lg:overflow-y-auto">
           {/* ─── Header ─── */}
           <div className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur-lg">
             <div className="flex items-center justify-between px-4 py-3 lg:px-6">
@@ -359,30 +359,32 @@ export default function CallingView() {
           </div>
 
           {/* ─── Content Area ─── */}
-          <div className="flex-1 p-4 lg:p-6">
+          <div className="flex-1 overflow-y-auto p-4 lg:p-6">
             {lead ? (
               <div className="mx-auto max-w-2xl space-y-4 lg:space-y-5">
-                {/* ─── Leads Horizontal Scroll (mobile, at top) ─── */}
-                <div className="lg:hidden -mx-4 px-4">
-                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                {/* ─── Leads Vertical List (mobile) ─── */}
+                <div className="lg:hidden">
+                  <div className="space-y-2">
                     {leads.map((l) => {
                       const cfg = LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]
                       return (
                         <button
                           key={l.id}
                           onClick={() => selectLead(l.id)}
-                          className={`flex shrink-0 flex-col items-start gap-1 rounded-2xl border px-4 py-3 text-left transition-all active:scale-95 min-w-[160px] ${
+                          className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all active:scale-95 ${
                             l.id === selectedId
                               ? "border-ring bg-muted ring-1 ring-ring"
                               : "border-border bg-card hover:bg-muted"
                           }`}
                         >
-                          <div className="flex items-center gap-2 w-full">
-                            <span className={`h-2 w-2 shrink-0 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
-                            <span className="truncate text-sm font-semibold">{l.business_name}</span>
+                          <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${statusDot(l.status)}`} style={{ backgroundColor: "currentColor" }} />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate text-sm font-semibold">{l.business_name}</span>
+                            </div>
+                            <span className="truncate text-xs text-muted-foreground">{l.contact_name}</span>
                           </div>
-                          <span className="truncate text-xs text-muted-foreground pl-4">{l.contact_name}</span>
-                          <span className={`mt-0.5 self-start text-[10px] font-medium px-2 py-0.5 rounded-full ${cfg?.bg || "bg-muted"} ${cfg?.color || "text-muted-foreground"}`}>
+                          <span className={`shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full ${cfg?.bg || "bg-muted"} ${cfg?.color || "text-muted-foreground"}`}>
                             {cfg?.label || l.status}
                           </span>
                         </button>

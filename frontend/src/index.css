@@ -5,8 +5,40 @@
 
 @layer base {
   * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
-  html { @apply font-sans; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    @apply font-sans;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  input, button, textarea, select {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+  /* Ensure minimum touch target size on mobile */
+  @media (max-width: 768px) {
+    .btn-min-touch {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .touch-target {
+      min-height: 44px;
+    }
+  }
 
   :root {
     --background: oklch(0.145 0 0);

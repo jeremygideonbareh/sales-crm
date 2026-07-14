@@ -32,18 +32,18 @@ export function KpiCard({
   return (
     <Card className="group relative overflow-hidden">
       <div className={cn("absolute inset-0 opacity-[0.03]", bgClass)} />
-      <CardHeader className="flex-row items-center gap-3 space-y-0 p-4">
+      <CardHeader className="flex-row items-center gap-3 space-y-0 p-3 sm:p-4">
         <div
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-lg",
+            "flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg",
             bgClass
           )}
         >
-          <Icon className={cn("h-5 w-5", iconClass)} />
+          <Icon className={cn("h-4 w-4 sm:h-5 sm:w-5", iconClass)} />
         </div>
         <div className="min-w-0 flex-1">
-          <CardDescription className="text-xs">{title}</CardDescription>
-          <CardTitle className="text-2xl">
+          <CardDescription className="text-[10px] sm:text-xs">{title}</CardDescription>
+          <CardTitle className="text-lg sm:text-2xl">
             <NumberTicker
               value={value}
               prefix={prefix}
@@ -54,7 +54,7 @@ export function KpiCard({
         {trend && (
           <div
             className={cn(
-              "flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
+              "flex items-center gap-1 rounded-full px-1.5 py-0.5 sm:px-2 text-[10px] sm:text-xs font-medium",
               trend.positive
                 ? "bg-emerald-900/20 text-emerald-400"
                 : "bg-red-900/20 text-red-400"

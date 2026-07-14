@@ -207,9 +207,10 @@ export default function Leads() {
         title="Leads"
         description={`${total} total leads`}
       >
-        <Button variant="outline" size="sm" onClick={handleExport}>
+        <Button variant="outline" size="sm" onClick={handleExport} className="min-h-[36px]">
           <Download className="h-4 w-4" />
-          Export All
+          <span className="hidden sm:inline">Export</span>
+          <span className="sm:hidden">CSV</span>
         </Button>
         <input
           type="file"
@@ -218,9 +219,10 @@ export default function Leads() {
           accept=".csv,.xlsx,.xls"
           className="hidden"
         />
-        <Button onClick={() => fileRef.current?.click()} size="sm">
+        <Button onClick={() => fileRef.current?.click()} size="sm" className="min-h-[36px]">
           <Upload className="h-4 w-4" />
-          Upload CSV
+          <span className="hidden sm:inline">Upload CSV</span>
+          <span className="sm:hidden">Upload</span>
         </Button>
       </PageHeader>
 
@@ -465,11 +467,10 @@ export default function Leads() {
           )}
 
           {/* Pagination */}
-          <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-            <div className="flex items-center gap-4">
-              <span>
-                Showing {page * pageSize + 1}-
-                {Math.min((page + 1) * pageSize, total)} of {total}
+          <div className="mt-4 flex flex-col items-center justify-between gap-3 text-sm text-muted-foreground sm:flex-row">
+            <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
+              <span className="text-xs sm:text-sm">
+                {page * pageSize + 1}-{Math.min((page + 1) * pageSize, total)} of {total}
               </span>
               <div className="flex items-center gap-2">
                 <span className="text-xs">Rows</span>
@@ -480,7 +481,7 @@ export default function Leads() {
                     setPage(0)
                   }}
                 >
-                  <SelectTrigger className="h-7 w-16 text-xs">
+                  <SelectTrigger className="h-8 w-16 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -493,16 +494,17 @@ export default function Leads() {
                 </Select>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex w-full items-center justify-between gap-2 sm:w-auto">
               <Button
                 variant="outline"
                 size="sm"
                 disabled={page === 0}
                 onClick={() => setPage((p) => p - 1)}
+                className="flex-1 sm:flex-none"
               >
                 Previous
               </Button>
-              <span className="px-2">
+              <span className="whitespace-nowrap px-1 text-xs sm:px-2 sm:text-sm">
                 Page {page + 1} of {totalPages || 1}
               </span>
               <Button
@@ -510,6 +512,7 @@ export default function Leads() {
                 size="sm"
                 disabled={(page + 1) * pageSize >= total}
                 onClick={() => setPage((p) => p + 1)}
+                className="flex-1 sm:flex-none"
               >
                 Next
               </Button>

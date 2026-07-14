@@ -122,7 +122,9 @@ export default function Dashboard() {
         title="Dashboard"
         description="Your agency at a glance"
       >
-        <DateRangeFilter value={dateRange} onChange={setDateRange} />
+        <div className="w-full sm:w-auto">
+          <DateRangeFilter value={dateRange} onChange={setDateRange} />
+        </div>
       </PageHeader>
 
       {/* KPI Cards */}
@@ -160,14 +162,14 @@ export default function Dashboard() {
       </div>
 
       {/* Charts + Activity Grid */}
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3">
         {/* Bar Chart - Rep Performance */}
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Calls by Rep</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-72">
+            <div className="h-56 sm:h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.by_rep}>
                   <CartesianGrid
@@ -215,7 +217,7 @@ export default function Dashboard() {
       </div>
 
       {/* Trend + Pie Charts */}
-      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+      <div className="grid gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Weekly Trend</CardTitle>
@@ -230,7 +232,7 @@ export default function Dashboard() {
             <CardTitle>Lead Distribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-72">
+            <div className="h-56 sm:h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <RePieChart>
                   <Pie
@@ -274,7 +276,31 @@ export default function Dashboard() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          {/* Mobile: Card View */}
+          <div className="space-y-2 md:hidden">
+            {data.by_rep.map((r) => (
+              <div key={r.rep_id} className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/20 p-3">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">{r.rep_name}</p>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                    <span>{r.leads_assigned} leads</span>
+                    <span>{r.total_calls} calls</span>
+                    <span>{r.deals_closed} deals</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant="secondary" className="bg-emerald-900/20 text-emerald-400 text-xs">
+                    {r.success_rate}%
+                  </Badge>
+                  <span className="text-xs font-medium text-emerald-400">
+                    ${r.commission_owed.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop: Table */}
+          <div className="hidden md:block overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -324,7 +350,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
               {pipelineOverview.stages.map((stage) => {
                 const statusConfig = LEAD_STATUS[stage.status as keyof typeof LEAD_STATUS]
                 return (

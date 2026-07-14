@@ -45,9 +45,10 @@ export default function UsersPage() {
   return (
     <div className="space-y-6">
       <PageHeader title="Users" description="Manage agency team members">
-        <Button onClick={() => setShowCreate(true)} size="sm">
+        <Button onClick={() => setShowCreate(true)} size="sm" className="min-h-[36px]">
           <Plus className="h-4 w-4" />
-          Add User
+          <span className="hidden sm:inline">Add User</span>
+          <span className="sm:hidden">Add</span>
         </Button>
       </PageHeader>
 

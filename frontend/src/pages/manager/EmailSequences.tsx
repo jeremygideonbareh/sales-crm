@@ -159,7 +159,7 @@ export default function EmailSequences() {
       </PageHeader>
 
       {loading ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
             <Card key={i}><CardContent className="p-6"><Skeleton className="h-32 w-full" /></CardContent></Card>
           ))}
@@ -176,7 +176,7 @@ export default function EmailSequences() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {sequences.map((seq, i) => (
             <motion.div
               key={seq.id}
@@ -239,7 +239,7 @@ export default function EmailSequences() {
               <Label>Description</Label>
               <Input value={formDesc} onChange={(e) => setFormDesc(e.target.value)} placeholder="Optional description" />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
                 <Label>Trigger</Label>
                 <Select value={formTrigger} onValueChange={(v) => v && setFormTrigger(v)}>
@@ -269,9 +269,9 @@ export default function EmailSequences() {
               <Label className="mb-2 block">Steps</Label>
               <SequenceBuilder steps={formSteps} onChange={setFormSteps} />
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <Button variant="outline" onClick={() => setShowCreate(false)}>Cancel</Button>
-              <Button onClick={handleCreate} disabled={saving}>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3 pt-2">
+              <Button variant="outline" onClick={() => setShowCreate(false)} className="w-full sm:w-auto">Cancel</Button>
+              <Button onClick={handleCreate} disabled={saving} className="w-full sm:w-auto">
                 {saving ? "Creating..." : "Create Sequence"}
               </Button>
             </div>
@@ -295,7 +295,7 @@ export default function EmailSequences() {
               <Label>Description</Label>
               <Input value={formDesc} onChange={(e) => setFormDesc(e.target.value)} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
                 <Label>Trigger</Label>
                 <Select value={formTrigger} onValueChange={(v) => v && setFormTrigger(v)}>
@@ -325,9 +325,9 @@ export default function EmailSequences() {
               <Label className="mb-2 block">Steps</Label>
               <SequenceBuilder steps={formSteps} onChange={setFormSteps} />
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <Button variant="outline" onClick={() => { setShowEdit(null); resetForm() }}>Cancel</Button>
-              <Button onClick={handleSaveEdit} disabled={saving}>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3 pt-2">
+              <Button variant="outline" onClick={() => { setShowEdit(null); resetForm() }} className="w-full sm:w-auto">Cancel</Button>
+              <Button onClick={handleSaveEdit} disabled={saving} className="w-full sm:w-auto">
                 {saving ? "Saving..." : "Save Changes"}
               </Button>
             </div>

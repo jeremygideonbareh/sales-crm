@@ -42,7 +42,7 @@ export default function RepDashboard() {
     return (
       <div className="space-y-6">
         <Skeleton className="h-8 w-48" />
-      <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} className="h-24 rounded-xl" />
           ))}
@@ -110,7 +110,7 @@ export default function RepDashboard() {
               No pipeline data yet. Start calling leads!
             </p>
           ) : (
-            <div className="h-72">
+            <div className="h-56 sm:h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stageChartData}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" strokeOpacity={0.3} />
@@ -137,7 +137,7 @@ export default function RepDashboard() {
       </Card>
 
       {/* Pipeline Stages List */}
-      <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {data.pipeline_stages.map((stage) => {
           const statusConfig = LEAD_STATUS[stage.status as keyof typeof LEAD_STATUS]
           return (

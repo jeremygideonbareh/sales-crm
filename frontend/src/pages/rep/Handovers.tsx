@@ -146,7 +146,7 @@ export default function Handovers() {
               </Select>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Client Brief</label>
                 <textarea
@@ -167,7 +167,7 @@ export default function Handovers() {
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Design Preferences</label>
                 <textarea
@@ -188,7 +188,7 @@ export default function Handovers() {
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Budget ($)</label>
                 <Input
@@ -246,7 +246,7 @@ export default function Handovers() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 md:grid-cols-2">
                   {h.client_brief && (
                     <div className="rounded-lg bg-muted/30 p-3">
                       <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Client Brief</p>

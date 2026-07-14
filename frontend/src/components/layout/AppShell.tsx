@@ -12,7 +12,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isMobile = useIsMobile()
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen w-full overflow-x-hidden">
       <Sidebar
         collapsed={isMobile ? false : sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -20,7 +20,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         onMobileClose={() => setMobileMenuOpen(false)}
       />
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile header with hamburger */}
         <MobileHeader onMenuClick={() => setMobileMenuOpen(true)} />
 
@@ -34,12 +34,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {/* Main content */}
         <main
           className={cn(
-            "flex-1 overflow-auto transition-all duration-300",
+            "flex-1 overflow-x-hidden overflow-y-auto transition-all duration-300",
             "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-surface via-background to-background",
             isMobile && "pb-20" // space for bottom nav
           )}
         >
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </main>

@@ -184,18 +184,18 @@ export default function EmailSequences() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05, duration: 0.25 }}
             >
-              <Card className="h-full cursor-pointer hover:border-emerald-800/50 transition-colors"
+              <Card className="h-full cursor-pointer hover:border-emerald-800/50 transition-colors min-w-0"
                 onClick={() => setShowView(seq)}
               >
                 <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <CardTitle className="text-base">{seq.name}</CardTitle>
-                    <Badge variant={seq.is_active ? "default" : "secondary"} className="text-xs">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-base truncate">{seq.name}</CardTitle>
+                    <Badge variant={seq.is_active ? "default" : "secondary"} className="text-xs shrink-0">
                       {seq.is_active ? "Active" : "Paused"}
                     </Badge>
                   </div>
                   {seq.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-2">{seq.description}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-2 card-break-word">{seq.description}</p>
                   )}
                 </CardHeader>
                 <CardContent>

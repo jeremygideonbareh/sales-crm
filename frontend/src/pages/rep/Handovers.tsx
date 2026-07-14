@@ -229,12 +229,12 @@ export default function Handovers() {
       ) : (
         <div className="space-y-4">
           {handovers.map((h) => (
-            <Card key={h.id}>
+            <Card key={h.id} className="min-w-0">
               <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{h.business_name || `Client #${h.lead_id}`}</CardTitle>
-                    <p className="mt-1 text-sm text-muted-foreground">{h.contact_name}</p>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <CardTitle className="text-lg truncate">{h.business_name || `Client #${h.lead_id}`}</CardTitle>
+                    <p className="mt-1 text-sm text-muted-foreground truncate">{h.contact_name}</p>
                   </div>
                   <Badge variant="secondary" className={
                     h.status === 'completed'

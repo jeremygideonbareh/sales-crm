@@ -128,7 +128,7 @@ export default function Dashboard() {
       </PageHeader>
 
       {/* KPI Cards */}
-      <div className="grid gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-2 sm:gap-3 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="Total Calls"
           value={data.kpi.total_calls}
@@ -279,16 +279,16 @@ export default function Dashboard() {
           {/* Mobile: Card View */}
           <div className="space-y-2 md:hidden">
             {data.by_rep.map((r) => (
-              <div key={r.rep_id} className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/20 p-3">
+              <div key={r.rep_id} className="flex items-center justify-between gap-3 rounded-lg border border-border/50 bg-muted/20 p-3">
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium">{r.rep_name}</p>
+                  <p className="text-sm font-medium truncate">{r.rep_name}</p>
                   <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
                     <span>{r.leads_assigned} leads</span>
                     <span>{r.total_calls} calls</span>
                     <span>{r.deals_closed} deals</span>
                   </div>
                 </div>
-                <div className="flex flex-col items-end gap-1">
+                <div className="flex flex-col items-end gap-1 shrink-0">
                   <Badge variant="secondary" className="bg-emerald-900/20 text-emerald-400 text-xs">
                     {r.success_rate}%
                   </Badge>
@@ -354,15 +354,15 @@ export default function Dashboard() {
               {pipelineOverview.stages.map((stage) => {
                 const statusConfig = LEAD_STATUS[stage.status as keyof typeof LEAD_STATUS]
                 return (
-                  <Card key={stage.status} className="border-border/50">
+                  <Card key={stage.status} className="border-border/50 min-w-0">
                     <CardHeader className="pb-2">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2">
                         <p className="text-xs font-medium text-muted-foreground truncate">
                           {stage.label}
                         </p>
-                        <Badge variant="secondary" className={
+                        <Badge variant="secondary" className={`shrink-0 ${
                           `${statusConfig?.bg || 'bg-muted'} ${statusConfig?.color || ''}`
-                        }>
+                        }`}>
                           {stage.count}
                         </Badge>
                       </div>

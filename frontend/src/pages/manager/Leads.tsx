@@ -265,22 +265,23 @@ export default function Leads() {
                   }}
                 >
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <div className="flex items-center gap-3 min-w-0">
                         <input
                           type="checkbox"
                           checked={selectedIds.has(l.id)}
                           onChange={(e) => { e.stopPropagation(); toggleSelect(l.id) }}
-                          className="h-4 w-4 rounded border-border bg-transparent accent-emerald-500"
+                          className="h-4 w-4 shrink-0 rounded border-border bg-transparent accent-emerald-500"
                         />
-                        <div>
-                          <p className="font-medium text-sm">{l.business_name}</p>
-                          <p className="text-xs text-muted-foreground">{l.contact_name}</p>
+                        <div className="min-w-0">
+                          <p className="font-medium text-sm truncate">{l.business_name}</p>
+                          <p className="text-xs text-muted-foreground truncate">{l.contact_name}</p>
                         </div>
                       </div>
                       <Badge
                         variant="secondary"
                         className={cn(
+                          "shrink-0",
                           LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]?.bg,
                           LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]?.color
                         )}
@@ -288,9 +289,9 @@ export default function Leads() {
                         {LEAD_STATUS[l.status as keyof typeof LEAD_STATUS]?.label || l.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <a href={`tel:${l.phone}`} onClick={(e) => e.stopPropagation()} className="font-mono hover:text-emerald-400 transition-colors">{l.phone}</a>
-                      <span>{l.assigned_to || "Unassigned"}</span>
+                    <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                      <a href={`tel:${l.phone}`} onClick={(e) => e.stopPropagation()} className="font-mono hover:text-emerald-400 transition-colors truncate">{l.phone}</a>
+                      <span className="shrink-0">{l.assigned_to || "Unassigned"}</span>
                     </div>
                     {l.deal_value && (
                       <div className="mt-1 text-right text-xs font-medium text-emerald-400">

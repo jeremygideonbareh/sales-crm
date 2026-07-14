@@ -35,14 +35,14 @@ export function KpiCard({
       <CardHeader className="flex-row items-center gap-3 space-y-0 p-3 sm:p-4">
         <div
           className={cn(
-            "flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg",
+            "flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg",
             bgClass
           )}
         >
           <Icon className={cn("h-4 w-4 sm:h-5 sm:w-5", iconClass)} />
         </div>
         <div className="min-w-0 flex-1">
-          <CardDescription className="text-[10px] sm:text-xs">{title}</CardDescription>
+          <CardDescription className="text-[10px] sm:text-xs truncate">{title}</CardDescription>
           <CardTitle className="text-lg sm:text-2xl">
             <NumberTicker
               value={value}
@@ -54,7 +54,7 @@ export function KpiCard({
         {trend && (
           <div
             className={cn(
-              "flex items-center gap-1 rounded-full px-1.5 py-0.5 sm:px-2 text-[10px] sm:text-xs font-medium",
+              "flex items-center gap-1 rounded-full px-1.5 py-0.5 sm:px-2 text-[10px] sm:text-xs font-medium shrink-0",
               trend.positive
                 ? "bg-emerald-900/20 text-emerald-400"
                 : "bg-red-900/20 text-red-400"

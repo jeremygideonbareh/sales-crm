@@ -151,4 +151,21 @@
   .animate-scale-in {
     animation: scale-in 0.2s ease-out;
   }
+  .card-text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-break-word {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+/* Card overflow protection */
+[data-slot="card"] {
+  min-width: 0;
+}
+[data-slot="card"] * {
+  max-width: 100%;
 }

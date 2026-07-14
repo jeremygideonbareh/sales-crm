@@ -141,11 +141,11 @@ export default function RepDashboard() {
         {data.pipeline_stages.map((stage) => {
           const statusConfig = LEAD_STATUS[stage.status as keyof typeof LEAD_STATUS]
           return (
-            <Card key={stage.status}>
+            <Card key={stage.status} className="min-w-0">
               <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm font-medium">{statusConfig?.label || stage.status}</CardTitle>
-                  <Badge variant="secondary" className={`${statusConfig?.bg || 'bg-muted'} ${statusConfig?.color || 'text-muted-foreground'}`}>
+                <div className="flex items-center justify-between gap-2">
+                  <CardTitle className="text-sm font-medium truncate">{statusConfig?.label || stage.status}</CardTitle>
+                  <Badge variant="secondary" className={`${statusConfig?.bg || 'bg-muted'} ${statusConfig?.color || 'text-muted-foreground'} shrink-0`}>
                     {stage.count}
                   </Badge>
                 </div>
@@ -179,21 +179,21 @@ export default function RepDashboard() {
           ) : (
             <div className="space-y-3">
               {data.recent_activity.map((a) => (
-                <div key={a.id} className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/30 px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className={`h-2 w-2 rounded-full ${
+                <div key={a.id} className="flex items-center justify-between gap-3 rounded-lg border border-border/50 bg-muted/30 px-3 py-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={`h-2 w-2 shrink-0 rounded-full ${
                       LEAD_STATUS[a.status as keyof typeof LEAD_STATUS]?.color || 'text-muted-foreground'
                     } bg-current`} />
-                    <span className="text-sm font-medium">{a.business_name}</span>
+                    <span className="text-sm font-medium truncate">{a.business_name}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className={
+                  <div className="flex items-center gap-3 shrink-0">
+                    <Badge variant="secondary" className={`shrink-0 ${
                       `${LEAD_STATUS[a.status as keyof typeof LEAD_STATUS]?.bg || 'bg-muted'} ${
                       LEAD_STATUS[a.status as keyof typeof LEAD_STATUS]?.color || 'text-muted-foreground'}`
-                    }>
+                    }`}>
                       {LEAD_STATUS[a.status as keyof typeof LEAD_STATUS]?.label || a.status}
                     </Badge>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">
                       {a.timestamp ? new Date(a.timestamp).toLocaleDateString() : ''}
                     </span>
                   </div>

@@ -148,3 +148,33 @@ GitHub (main branch)
 ## Credentials
 - Demo: `admin@agency.com` / `admin123`
 - ⚠️ **Must change these immediately after deployment**
+
+---
+
+## Session 3: Mobile Card Overflow Fix — Orchestrated Agent Pipeline
+**Date:** 2026-07-14
+**Focus:** Fix data spilling out of cards on mobile for every dashboard section
+
+### What Was Accomplished
+Fixed mobile card overflow across **13 files** with targeted CSS class additions:
+- **Base layer:** Added `min-w-0` to CardContent component; added global `[data-slot="card"]` overflow protection rules in `index.css`; added `.card-text-overflow` and `.card-break-word` utility classes
+- **KPI Cards:** Added `shrink-0` to icon containers and trend badges; added `truncate` to card titles
+- **Rep Dashboard:** Added `min-w-0`, `truncate`, `shrink-0` to pipeline stage cards and recent activity items
+- **Manager Dashboard:** Tightened KPI grid gap on mobile; added overflow protection to pipeline overview and rep performance mobile cards
+- **Leaderboard:** Added `min-w-0` to podium cards; `truncate` + `shrink-0` to mobile rankings
+- **Manager Leads:** Added overflow protection to mobile card view (business names, phone numbers, badges)
+- **DemoRequests / Handovers / EmailSequences:** Added `min-w-0`, `truncate`, `shrink-0` to all card items
+- **CallingView:** Added `truncate` to lead header name on mobile
+- **ActivityFeed / ResponsiveTable:** Added truncation and shrink protection
+
+### Fix Patterns Applied
+Core CSS classes used consistently across all files:
+1. `min-w-0` — allows flex children to shrink below content size
+2. `shrink-0` — prevents flex items from being compressed
+3. `truncate` — clips overflowing text with ellipsis
+4. `gap-{x}` / `whitespace-nowrap` — spacing and text stability
+
+### Verification
+- ✅ TypeScript compilation: 0 errors (`npx tsc --noEmit`)
+- No JavaScript logic changed — CSS-only fixes
+- All existing animations and interactions preserved

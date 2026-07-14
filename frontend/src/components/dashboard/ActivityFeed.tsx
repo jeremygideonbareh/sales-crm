@@ -62,7 +62,7 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
                     <Icon className="h-3.5 w-3.5" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm">
+                    <p className="text-sm truncate">
                       <span className="font-medium">{a.repName}</span>
                       <span className="text-muted-foreground">
                         {" "}

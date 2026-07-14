@@ -220,7 +220,7 @@ export default function Leaderboard() {
               gradientColor="#262626"
               gradientOpacity={0.15}
               className={cn(
-                "relative overflow-hidden rounded-xl border",
+                "relative overflow-hidden rounded-xl border min-w-0",
                 podiumBorders[i],
               )}
             >
@@ -285,17 +285,17 @@ export default function Leaderboard() {
                 {sorted.map((entry) => (
                   <Card key={entry.rep_id} className="overflow-hidden">
                     <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-2 min-w-0">
                           <RankBadge rank={entry.rank} />
                           <RankChange rank={entry.rank} />
-                          <span className="font-medium">{entry.rep_name}</span>
+                          <span className="font-medium truncate">{entry.rep_name}</span>
                         </div>
-                        <Badge variant="secondary" className="bg-emerald-900/20 text-emerald-400">
+                        <Badge variant="secondary" className="bg-emerald-900/20 text-emerald-400 shrink-0">
                           {entry.deals_closed} deals
                         </Badge>
                       </div>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-2 gap-2 text-sm">
                         <div>
                           <span className="text-muted-foreground">Leads:</span> {entry.total_leads_assigned}
                         </div>

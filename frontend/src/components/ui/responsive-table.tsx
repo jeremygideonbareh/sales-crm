@@ -85,12 +85,12 @@ export function ResponsiveTable<T>({
                 .map((col) => (
                   <div
                     key={col.key}
-                    className="flex items-center justify-between py-2 text-sm"
+                    className="flex items-center justify-between gap-2 py-2 text-sm"
                   >
-                    <span className="text-xs font-medium text-muted-foreground">
+                    <span className="text-xs font-medium text-muted-foreground shrink-0">
                       {col.header}
                     </span>
-                    <span className={cn("text-right", col.className)}>
+                    <span className={cn("text-right min-w-0 truncate", col.className)}>
                       {col.render(item)}
                     </span>
                   </div>

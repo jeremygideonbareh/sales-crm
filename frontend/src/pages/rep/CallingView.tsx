@@ -396,8 +396,8 @@ export default function CallingView() {
                 {/* ─── Lead Header (mobile: name only) ─── */}
                 <div className="flex items-start gap-3 lg:hidden">
                   <div className="min-w-0 flex-1">
-                    <h2 className="text-xl font-bold leading-tight">{lead.business_name}</h2>
-                    <p className="mt-0.5 text-sm text-muted-foreground">{lead.contact_name}</p>
+                    <h2 className="text-xl font-bold leading-tight truncate">{lead.business_name}</h2>
+                    <p className="mt-0.5 text-sm text-muted-foreground truncate">{lead.contact_name}</p>
                   </div>
                 </div>
 

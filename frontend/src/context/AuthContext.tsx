@@ -5,7 +5,7 @@ import { authApi } from '../api/client'
 interface AuthContextType {
   user: UserResponse | null
   loading: boolean
-  login: (email: string, password: string) => Promise<void>
+  login: (username: string, password: string) => Promise<void>
   logout: () => void
 }
 
@@ -27,8 +27,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const login = async (email: string, password: string) => {
-    const { access_token } = await authApi.login(email, password)
+  const login = async (username: string, password: string) => {
+    const { access_token } = await authApi.login(username, password)
     localStorage.setItem('token', access_token)
     const me = await authApi.me()
     setUser(me)

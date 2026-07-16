@@ -41,7 +41,7 @@ async def register(req: RegisterRequest, db: AsyncSession = Depends(get_db)):
 @router.post("/login", response_model=TokenResponse)
 async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
     try:
-        user = await authenticate_user(db, req.email, req.password)
+        user = await authenticate_user(db, req.username, req.password)
         token = create_access_token(user.id, user.role.value)
         return TokenResponse(access_token=token)
     except ValueError as e:

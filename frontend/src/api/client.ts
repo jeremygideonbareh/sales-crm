@@ -30,8 +30,8 @@ api.interceptors.response.use(
 export default api
 
 export const authApi = {
-  login: (email: string, password: string) =>
-    api.post('/auth/login', { email, password }).then((r) => r.data),
+  login: (username: string, password: string) =>
+    api.post('/auth/login', { username, password }).then((r) => r.data),
   register: (data: { email: string; password: string; full_name: string; role: string }) =>
     api.post('/auth/register', data).then((r) => r.data),
   me: () => api.get('/auth/me').then((r) => r.data),
@@ -97,6 +97,7 @@ export const repsApi = {
 export const analyticsApi = {
   dashboard: () => api.get('/analytics/dashboard').then((r) => r.data),
   leaderboard: () => api.get('/analytics/leaderboard').then((r) => r.data),
+  recentActivity: () => api.get('/analytics/recent-activity').then((r) => r.data),
 }
 
 export const pipelineApi = {

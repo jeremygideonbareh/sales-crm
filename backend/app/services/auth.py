@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
 from jose import jwt
@@ -45,9 +45,14 @@ async def register_user(db: AsyncSession, email: str, password: str, full_name: 
     return user
 
 
-async def authenticate_user(db: AsyncSession, email: str, password: str) -> User:
-    result = await db.execute(select(User).where(User.email == email))
+async def authenticate_user(db: AsyncSession, username: str, password: str) -> User:
+    result = await db.execute(
+        select(User).where(
+            (func.lower(User.email) == func.lower(username)) |
+            (func.lower(User.full_name) == func.lower(username))
+        )
+    )
     user = result.scalar_one_or_none()
     if not user or not verify_password(password, user.hashed_password):
-        raise ValueError("Invalid email or password")
+        raise ValueError("Invalid credentials")
     return user

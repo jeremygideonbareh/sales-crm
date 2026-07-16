@@ -6,7 +6,7 @@ from ..models.call_log import CallLog
 from ..models.user import User, UserRole
 from ..schemas.analytics import (
     KPIResponse, RepMetric, StatusDistribution, DashboardResponse,
-    LeaderboardEntry, RepDashboardResponse
+    LeaderboardEntry, RepDashboardResponse, RecentActivityItem
 )
 
 
@@ -218,3 +218,24 @@ async def get_rep_dashboard(db: AsyncSession, rep_id: int) -> RepDashboardRespon
         pipeline_stages=pipeline_stages,
         recent_activity=recent_activity,
     )
+
+
+async def get_recent_activity(db: AsyncSession) -> list[RecentActivityItem]:
+    """Return the last 20 call logs across all reps with lead business_name and rep full_name."""
+    result = await db.execute(
+        select(CallLog, Lead.business_name, User.full_name)
+        .join(Lead, CallLog.lead_id == Lead.id)
+        .join(User, CallLog.rep_id == User.id)
+        .order_by(CallLog.created_at.desc())
+        .limit(20)
+    )
+    items = []
+    for log, business_name, rep_name in result:
+        items.append(RecentActivityItem(
+            id=log.id,
+            type="call",
+            rep_name=rep_name,
+            business_name=business_name,
+            timestamp=log.created_at.isoformat() if log.created_at else "",
+        ))
+    return items

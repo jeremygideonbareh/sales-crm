@@ -5,7 +5,7 @@ import {
   PhoneCall,
   Eye,
   EyeOff,
-  Mail,
+  User,
   Lock,
   ArrowRight,
 } from "lucide-react"
@@ -16,7 +16,7 @@ import { Particles } from "@/components/ui/particles"
 import { BorderBeam } from "@/components/ui/border-beam"
 
 export default function Login() {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -29,12 +29,12 @@ export default function Login() {
     setError("")
     setLoading(true)
     try {
-      await login(email, password)
+      await login(username, password)
       navigate("/")
     } catch (err: unknown) {
       const detail =
         (err as { response?: { data?: { detail?: string } } })?.response?.data
-          ?.detail || "Invalid email or password"
+          ?.detail || "Invalid credentials"
       setError(detail)
     } finally {
       setLoading(false)
@@ -74,19 +74,19 @@ export default function Login() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Name or Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@agency.com"
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="your name or email"
                   className="pl-10"
                   required
                   autoFocus
-                  autoComplete="email"
+                  autoComplete="username"
                 />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function Login() {
           </form>
 
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Demo: admin@agency.com / admin123
+            Reps: login with your name (e.g. "Ashba") + your password
           </p>
         </div>
       </div>

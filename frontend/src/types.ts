@@ -75,6 +75,14 @@ export interface DashboardData {
   status_distribution: StatusDistribution[]
 }
 
+export interface RecentActivityItem {
+  id: number
+  type: string
+  rep_name: string
+  business_name: string
+  timestamp: string
+}
+
 // Pipeline stages
 export type PipelineStatus =
   | 'uncalled' | 'no_answer' | 'not_interested' | 'interested'

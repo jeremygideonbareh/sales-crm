@@ -41,7 +41,7 @@ import { TrendChart } from "@/components/dashboard/TrendChart"
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed"
 import { DateRangeFilter } from "@/components/dashboard/DateRangeFilter"
 import { Skeleton } from "@/components/ui/skeleton"
-import type { DashboardData, RepMetric, PipelineOverviewResponse } from "@/types"
+import type { DashboardData, RepMetric, PipelineOverviewResponse, RecentActivityItem } from "@/types"
 import { LEAD_STATUS } from "@/lib/utils"
 
 const COLORS = ["#64748b", "#fbbf24", "#f87171", "#60a5fa", "#34d399"]
@@ -61,6 +61,7 @@ export default function Dashboard() {
   const [dateRange, setDateRange] = useState(30)
   const [loading, setLoading] = useState(true)
   const [pipelineOverview, setPipelineOverview] = useState<PipelineOverviewResponse | null>(null)
+  const [rawActivity, setRawActivity] = useState<RecentActivityItem[]>([])
 
   useEffect(() => {
     setLoading(true)
@@ -73,6 +74,8 @@ export default function Dashboard() {
       .overview()
       .then(setPipelineOverview)
       .catch(() => {})
+
+    analyticsApi.recentActivity().then(setRawActivity).catch(() => {})
   }, [])
 
   if (loading && !data) {
@@ -94,27 +97,14 @@ export default function Dashboard() {
 
   if (!data) return null
 
-  // Build mock recent activity from rep data
-  const recentActivity: Array<{
-    id: number
-    type: "call" | "deal" | "lost" | "followup"
-    repName: string
-    businessName: string
-    timestamp: string
-  }> = []
-  if (data.by_rep.length > 0) {
-    data.by_rep.forEach((r: RepMetric) => {
-      recentActivity.push({
-        id: r.rep_id * 10,
-        type: "call" as const,
-        repName: r.rep_name,
-        businessName: `${r.rep_name}'s Client`,
-        timestamp: new Date(
-          Date.now() - Math.random() * 86400000
-        ).toISOString(),
-      })
-    })
-  }
+  // Map API activity to ActivityFeed props
+  const recentActivity = rawActivity.map((a) => ({
+    id: a.id,
+    type: (a.type === "call" ? "call" : "call") as "call" | "deal" | "lost" | "followup",
+    repName: a.rep_name,
+    businessName: a.business_name,
+    timestamp: a.timestamp,
+  }))
 
   return (
     <div className="space-y-6">

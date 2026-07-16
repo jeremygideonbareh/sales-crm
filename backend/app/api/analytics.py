@@ -3,8 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..models.user import User
-from ..schemas.analytics import DashboardResponse, LeaderboardResponse
-from ..services.analytics import get_dashboard, get_leaderboard
+from ..schemas.analytics import DashboardResponse, LeaderboardResponse, RecentActivityItem
+from ..services.analytics import get_dashboard, get_leaderboard, get_recent_activity
 from .deps import require_role, get_current_user
 
 router = APIRouter(prefix="/api/analytics", tags=["analytics"])
@@ -25,3 +25,11 @@ async def leaderboard(
 ):
     entries = await get_leaderboard(db)
     return LeaderboardResponse(entries=entries)
+
+
+@router.get("/recent-activity", response_model=list[RecentActivityItem])
+async def recent_activity(
+    user: User = Depends(require_role("manager")),
+    db: AsyncSession = Depends(get_db),
+):
+    return await get_recent_activity(db)

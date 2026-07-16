@@ -69,3 +69,11 @@ class PipelineStage(BaseModel):
 
 class PipelineOverviewResponse(BaseModel):
     stages: list[PipelineStage]
+
+
+class RecentActivityItem(BaseModel):
+    id: int
+    type: str = "call"
+    rep_name: str
+    business_name: str
+    timestamp: str

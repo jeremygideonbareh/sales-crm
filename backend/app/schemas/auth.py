@@ -12,6 +12,8 @@ class LoginRequest(BaseModel):
     username: str = Field(alias="email")
     password: str
 
+    model_config = {"populate_by_name": True}
+
 
 class TokenResponse(BaseModel):
     access_token: str

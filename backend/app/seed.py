@@ -12,9 +12,9 @@ SEED_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "seed_data.
 
 USERS = [
     {"email": "admin@agency.com", "password": "admin123", "full_name": "Agency Manager", "role": UserRole.MANAGER},
-    {"email": "ashba@agency.com", "password": "ashba123", "full_name": "Ashba", "role": UserRole.REP},
-    {"email": "jai@agency.com", "password": "jai123", "full_name": "Jai", "role": UserRole.REP},
-    {"email": "agnas@agency.com", "password": "agnas123", "full_name": "Agnas", "role": UserRole.REP},
+    {"email": "ashba@agency.com", "password": "Ashba742!", "full_name": "Ashba", "role": UserRole.REP},
+    {"email": "jai@agency.com", "password": "Jupiter83@", "full_name": "Jai", "role": UserRole.REP},
+    {"email": "agnas@agency.com", "password": "Agnas651#", "full_name": "Agnas", "role": UserRole.REP},
 ]
 
 
